@@ -18,6 +18,12 @@ public class Enemy : MonoBehaviour
     public float speedIncrement = 0.05F;
     public int moveDistance = 1;
     // Start is called before the first frame update
+    void Start()
+    {
+      OnEnemyDied += GetOnEnemyDied; //Change these, they don't work
+      OnEnemyMoving += GetOnEnemyMoving;
+      InvokeRepeating("Move", speed, speed);
+    }
     void OnCollisionEnter2D(Collision2D collision)
     {
       if(collision.gameObject.tag=="bullet"){
@@ -27,6 +33,7 @@ public class Enemy : MonoBehaviour
         OnEnemyDied -= GetOnEnemyDied;
         OnEnemyMoving -= GetOnEnemyMoving;
         OnEnemyDied.Invoke(points);
+        
         Destroy(this.gameObject);
       } 
       else
@@ -43,12 +50,6 @@ public class Enemy : MonoBehaviour
       */
     }
     
-    void Start()
-    {
-      OnEnemyDied += GetOnEnemyDied; //Change these, they don't work
-      OnEnemyMoving += GetOnEnemyMoving;
-      InvokeRepeating("Move", speed, speed);
-    }
     void GetOnEnemyDied(float points)
     {
       speed -= speedIncrement;
@@ -63,10 +64,12 @@ public class Enemy : MonoBehaviour
     void Move()
     {
       //Vector3 temp = transform.position
-      if(transform.position.x >= 11){
+      if(transform.position.x >= 9){
+        Debug.Log("Edge hit!");
         OnEnemyMoving.Invoke(-1);
       }
-      else if(transform.position.x <= -11){
+      else if(transform.position.x <= -9){
+        Debug.Log("Edge hit!");
         OnEnemyMoving.Invoke(-1);
       }
       else

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class ScoreSystem : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class ScoreSystem : MonoBehaviour
     void GetOnEnemyDied(float pointWorth)
     {
       score += pointWorth;
+      GetComponent<AudioSource>().Play();
       if(score > highScore)
       {
         highScore = score;
@@ -35,6 +37,10 @@ public class ScoreSystem : MonoBehaviour
       string hiScoreString = $"High Score \n {highScore}";
       scoreText.text = scoreString;
       highScoreText.text = hiScoreString;
+      if(score == 250)
+      {
+        SceneManager.LoadScene("Credits");
+      }
     }
     void GetOnPlayerDied()
     {

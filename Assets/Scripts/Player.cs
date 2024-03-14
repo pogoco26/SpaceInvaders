@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Player : MonoBehaviour
 {
   public GameObject bullet;
@@ -34,6 +35,7 @@ public class Player : MonoBehaviour
       activeObject = GameObject.Find("Bullet(Clone)");
       if(activeObject == null){
         GameObject shot = Instantiate(bullet, shottingOffset.position, Quaternion.identity);
+        GetComponent<AudioSource>().Play();
         Debug.Log("Bang!");
 
         Destroy(shot, 3f);
